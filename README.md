@@ -20,7 +20,7 @@ https://cdn.bannerbear.com/signedurl/29oZzmYy7Qe7jxDORa/image.jpg?m[][name]=cGhv
 - [Create a Signed URL Base](#create-a-signed-url-base)
 - [Building the Query String](#building-the-query-string)
 - [Signing the URL](#signing-the-url)
-- [Advanced: Signing the URL with Base64](#advanced-signing-the-url-with-base64)
+- [Advanced: Using Base64](#advanced-using-base64)
 - [Troubleshooting](#troubleshooting)
 
 ## How it Works
@@ -111,11 +111,31 @@ signature = Digest::MD5.hexdigest(api_key + base + query)
 return base + query + "&s=" + signature
 ```
 
-For many cases, this is all you need to do - the returned URL at the end of this script is a usable, signed url that will generate an image when accessed.
+The returned URL at the end of this script is a signed url that will generate an image when accessed.
 
-## Advanced: Signing the URL with Base64
+## Advanced: Using Base64
 
+Depending on your use case you may find that using escaped parameters does not produce sufficiently robust URLs for the platform you intend to use them with. As an example, in our testing we found that Pinterest had trouble importing Bannerbear Signed URLs using escaped parameters. When changed to the Base64 method, the URLs imported just fine. 
 
+### Add the &base64=true Parameter
+
+To use Base64 encoding, add the parameter `&base64=true` to your query string *before calculating the signature*.
+
+Then you will need to encode *all parameter values* in Base64, removing any padding or newlines that get added during the encoing process e.g. `==\n`
+
+In Ruby this is achieved via:
+
+```ruby
+Base64.urlsafe_encode64(string, :padding => false)
+```
+
+Example standard query:
+
+`?m[][name]=message&m[][text]=Hello+World`
+
+Same query using Base64:
+
+`?m[][name]=bWVzc2FnZQ&m[][text]=SGVsbG8gV29ybGQ&base64=true`
 
 ## Troubleshooting
 
