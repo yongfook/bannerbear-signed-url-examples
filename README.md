@@ -1,6 +1,6 @@
 # Bannerbear Signed URLs
 
-[Signed URLs](https://www.bannerbear.com/integrations/signed-urls/) are a way to use Bannerbear to generate images on-the-fly using only URL parameters.
+[Signed URLs](https://www.bannerbear.com/integrations/signed-urls/) are a way to use Bannerbear to generate images on demand using only URL parameters.
 
 The standard Bannerbear product is a [REST API](https://www.bannerbear.com/product/image-generation-api/) accessed using an API key. 
 
