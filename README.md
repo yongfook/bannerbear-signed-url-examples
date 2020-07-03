@@ -144,8 +144,8 @@ Getting your signature to match the one Bannerbear expects can be tricky at firs
 - Ensure `&s=` is the last parameter in your URL
 - Signature should be calculated *before* appending the `&s=` parameter
 - Signature should be a MD5 hash of api key + full url
-- Ensure that you are not changing the query string between calculating the signature and trying to access the url
-- If using Base64, ensure you are encoding *all* of your parameters *including the modification layer name*
+- Ensure that you are not changing the query string after calculating the signature
+- If using Base64, ensure you are encoding *all* of your parameter values *including the layer name*
 
 ### Examples
 
