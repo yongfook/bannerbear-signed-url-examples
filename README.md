@@ -14,7 +14,26 @@ Signed URLs are attached at the template level in Bannerbear. To start using Sig
 
 Bannerbear expects all modifications to appear in the url parameter `m`
 
-`m` is the url-parameterized version of the JSON modifications object that you will find in the template API console.
+`m` is the url-parameterized version of the JSON modifications that you will find in the template API console.
+
+For example, if your JSON modifications looks like this:
+```json
+"modifications": [
+  {
+    "name": "message",
+    "text": "Hello World"
+  },
+  {
+    "name": "face",
+    "image_url": "https://cdn.bannerbear.com/sample_images/welcome_bear_photo.jpg"
+  }
+]
+```
+The resulting query would look like this:
+
+`?m[][name]=message&m[][text]=Hello+World&m[][name]=face&m[][image_url]=https%3A%2F%2Fcdn.bannerbear.com%2Fsample_images%2Fwelcome_bear_photo.jpg`
+
+Note the escaped, url-safe parameters.
 
 ### Query String Tips
 
@@ -24,6 +43,34 @@ Bannerbear expects all modifications to appear in the url parameter `m`
 - Or if the layer is an image, the url to an image e.g. `m[][image_url]=`
 - Remember to escape your parameter values
 
+## Signing the URL
+
+Bannerbear expects the signature to appear in the parameter `s`
+
+`&s=` should be the *last parameter* in your URLs
+
+The signature is calculated as an MD5 hash of your api key + url base + query
+
+### Signing Example
+
+This example is in Ruby but you can find other language examples in the repository.
+
+```ruby
+#api_key: your project API key - keep this safe and non-public
+api_key = "YOURKEY"
+
+#base: this signed url base
+base = "https://cdn.bannerbear.com/signedurl/YOURID/image.jpg"
+
+#query: the query string of modifications you want to generate
+query = "?m[][name]=message&m[][text]=Hello+World"
+
+#calculate the signature
+signature = Digest::MD5.hexdigest(api_key + base + query)
+
+#append the signature
+return base + query + "&s=" + signature
+```
 
 ## Pull Requests Welcome
 
