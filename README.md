@@ -20,6 +20,7 @@ https://cdn.bannerbear.com/signedurl/29oZzmYy7Qe7jxDORa/image.jpg?m[][name]=cGhv
 - [Create a Signed URL Base](#create-a-signed-url-base)
 - [Building the Query String](#building-the-query-string)
 - [Signing the URL](#signing-the-url)
+- [Advanced: Signing the URL with Base64](#advanced-signing-the-url-with-base64)
 - [Troubleshooting](#troubleshooting)
 
 ## How it Works
@@ -112,8 +113,37 @@ return base + query + "&s=" + signature
 
 For many cases, this is all you need to do - the returned URL at the end of this script is a usable, signed url that will generate an image when accessed.
 
+## Advanced: Signing the URL with Base64
+
+
+
 ## Troubleshooting
 
+Getting your signature to match the one Bannerbear expects can be tricky at first. Here are some common issues if you're seeing an `invalid signature` error:
+
+- Ensure `&s=` is the last parameter in your URL
+- Signature should be calculated *before* appending the `&s=` parameter
+- Signature should be a MD5 hash of api key + full url
+- Ensure that you are not changing the query string between calculating the signature and trying to access the url
+- If using Base64, ensure you are encoding *all* of your parameters *including the modification layer name*
+
+### Examples
+
+:heavy_check_mark: Correct standard query
+
+`?m[][name]=message&m[][text]=Hello+World`
+
+:heavy_check_mark: Correct Base64 query
+
+`?m[][name]=bWVzc2FnZQ&m[][text]=SGVsbG8gV29ybGQ&base64=true`
+
+:x: Incorrect Base64 query - parameter is missing
+
+`?m[][name]=bWVzc2FnZQ&m[][text]=SGVsbG8gV29ybGQ`
+
+:x: Incorrect Base64 query - mix of encoded and unencoded parameter
+
+`?m[][name]=message&m[][text]=SGVsbG8gV29ybGQ&base64=true`
 
 ## Pull Requests Welcome
 
