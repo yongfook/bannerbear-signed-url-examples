@@ -121,7 +121,7 @@ Depending on your use case you may find that using escaped parameters does not p
 
 To use Base64 encoding, add the parameter `&base64=true` to your query string *before calculating the signature*.
 
-Then you will need to encode *all parameter values* in Base64, removing any padding or newlines that get added during the encoing process e.g. `==\n`
+Then you will need to encode *all parameter values* in Base64, removing any padding or newlines that get added during the encoding process e.g. `==\n`
 
 In Ruby this is achieved via:
 
