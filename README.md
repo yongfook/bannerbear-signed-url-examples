@@ -6,6 +6,15 @@ The standard Bannerbear product is a [REST API](https://www.bannerbear.com/produ
 
 Signed URLs *do not use the API key* in the URL params as by nature these params will be publicly visible. Instead, the Signed URL uses an encrypted signature so that the API key is never publicly exposed.
 
+### Example Image
+
+This image url is an example signed url using the Base64 encoding method described further down this README. Notice that if you try to change any of the parameters, the response becomes invalid.
+
+```
+https://cdn.bannerbear.com/signedurl/29oZzmYy7Qe7jxDORa/image.jpg?m[][name]=cGhvdG8&m[][image_url]=aHR0cHM6Ly93d3cuYmFubmVyYmVhci5jb20vaW1hZ2VzL2Jsb2cvcGhvdG8tMTQ5NTYzOTg2NzM4Ny01NDIzZDY4MTE1ODMtMS5qcGVn&m[][name]=dGl0bGU&m[][text]=V2lsbCBBSSBFdmVyIFJlcGxhY2UgRGVzaWduZXJzPw&m[][name]=cmVhZGluZw&m[][text]=OCBtaW51dGUgcmVhZA&m[][name]=YXZhdGFy&m[][image_url]=aHR0cHM6Ly93d3cuYmFubmVyYmVhci5jb20vaW1hZ2VzL2F1dGhvcl95b25nZm9vay5qcGc&m[][name]=bmFtZQ&m[][text]=Sm9uIFlvbmdmb29r&m[][name]=ZGF0ZQ&m[][text]=Tm92ZW1iZXIgMjAxOQ&base64=true&s=52f90de6cf09abbd3b58828046cd726e
+```
+
+
 ## Create a Signed URL Base
 
 Signed URLs are attached at the template level in Bannerbear. To start using Signed URLs, create a Signed URL Base. This is a unique endpoint associated with a template. You can create as many Bases as you want for each template. For most cases you will only need to create one Base for a template, but for flexibility Bannerbear allows you to create multiple Bases per template.
