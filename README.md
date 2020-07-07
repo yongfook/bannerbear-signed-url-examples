@@ -105,7 +105,7 @@ base = "https://cdn.bannerbear.com/signedurl/YOURID/image.jpg"
 query = "?m[][name]=message&m[][text]=Hello+World"
 
 #calculate the signature
-signature = Digest::MD5.hexdigest(api_key + base + query)
+signature = OpenSSL::HMAC.hexdigest("SHA256", api_key, base + query)
 
 #append the signature
 return base + query + "&s=" + signature
@@ -143,7 +143,7 @@ Getting your signature to match the one Bannerbear expects can be tricky at firs
 
 - Ensure `&s=` is the last parameter in your URL
 - Signature should be calculated *before* appending the `&s=` parameter
-- Signature should be a MD5 hash of api key + full url
+- Signature should be calculated using HMAC
 - Ensure that you are not changing the query string after calculating the signature
 - If using Base64, ensure you are encoding *all* of your parameter values *including the layer name*
 
