@@ -12,9 +12,7 @@ base = "https://cdn.bannerbear.com/signedurl/YOUR_SIGNED_URL_BASE_ID/image.jpg"
 query = "?m[][name]=title&m[][text]=This+is+a+title&m[][name]=subtitle&m[][text]=This+is+a+subtitle"
 
 #calculate the signature
-digest = OpenSSL::Digest.new('sha256')
-
-signature = OpenSSL::HMAC.hexdigest(digest, api_key + base + query)
+signature = OpenSSL::HMAC.hexdigest("SHA256", api_key, base + query)
 
 #append the signature
 return base + query + "&s=" + signature
