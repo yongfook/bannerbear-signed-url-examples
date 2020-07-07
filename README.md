@@ -105,7 +105,7 @@ base = "https://cdn.bannerbear.com/signedurl/YOURID/image.jpg"
 query = "?m[][name]=message&m[][text]=Hello+World"
 
 #calculate the signature
-signature = Digest::MD5.hexdigest(api_key + base + query)
+signature = OpenSSL::HMAC.hexdigest("SHA256", api_key, base + query)
 
 #append the signature
 return base + query + "&s=" + signature
