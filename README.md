@@ -165,6 +165,20 @@ Getting your signature to match the one Bannerbear expects can be tricky at firs
 
 `?m[][name]=message&m[][text]=SGVsbG8gV29ybGQ&base64=true`
 
+### Preloading Images in Meta Tags
+
+One common use case for signed urls is to use them in meta tags e.g. open graph, twitter cards etc
+
+Browsers do not load the assets specified in these meta tags, so a normal page load will not initiate the signed url first-hit image generation.
+
+You can use preloading to solve this using the `<link>` tag in your document `<head>` like so:
+
+```
+<link rel="preload" as="image" href="YOUR_SIGNED_URL" />
+```
+
+This tells the browser to load the image, essentially pinging Bannerbear to begin the image generation process.
+
 ## Pull Requests Welcome
 
 We welcome any additional code examples showing how to build Bannerbear Signed URLs in languages not covered here, or updates to our existing examples to make them read better.
