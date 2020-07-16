@@ -11,7 +11,7 @@ Signed URLs *do not use the API key* in the URL params as by nature these params
 This image url is an example signed url using the Base64 encoding method described further down this README. Notice that if you try to change any of the parameters, the response becomes invalid.
 
 ```
-https://cdn.bannerbear.com/signedurl/29oZzmYy7Qe7jxDORa/image.jpg?m[][name]=cGhvdG8&m[][image_url]=aHR0cHM6Ly93d3cuYmFubmVyYmVhci5jb20vaW1hZ2VzL2Jsb2cvcGhvdG8tMTQ5NTYzOTg2NzM4Ny01NDIzZDY4MTE1ODMtMS5qcGVn&m[][name]=dGl0bGU&m[][text]=V2lsbCBBSSBFdmVyIFJlcGxhY2UgRGVzaWduZXJzPw&m[][name]=cmVhZGluZw&m[][text]=OCBtaW51dGUgcmVhZA&m[][name]=YXZhdGFy&m[][image_url]=aHR0cHM6Ly93d3cuYmFubmVyYmVhci5jb20vaW1hZ2VzL2F1dGhvcl95b25nZm9vay5qcGc&m[][name]=bmFtZQ&m[][text]=Sm9uIFlvbmdmb29r&m[][name]=ZGF0ZQ&m[][text]=Tm92ZW1iZXIgMjAxOQ&base64=true&s=52f90de6cf09abbd3b58828046cd726e
+https://cdn.bannerbear.com/signedurl/NQ537aZE0kyvwj8bPx/image.jpg?m[][name]=cGhvdG8&m[][image_url]=aHR0cHM6Ly93d3cuYmFubmVyYmVhci5jb20vaW1hZ2VzL2Jsb2cvcGhvdG8tMTUxNzQ4Nzg4MTU5NC0yNzg3ZmVmNWViZjcuanBlZw&m[][name]=dGl0bGU&m[][text]=SG93IHRvIEF1dG8gR2VuZXJhdGUgUGludGVyZXN0IFBpbnMgVXNpbmcgU2lnbmVkIFVSTHM&m[][name]=cmVhZGluZw&m[][text]=NiBtaW51dGUgcmVhZA&m[][name]=YXZhdGFy&m[][image_url]=aHR0cHM6Ly93d3cuYmFubmVyYmVhci5jb20vaW1hZ2VzL2F1dGhvcl95b25nZm9vay5qcGc&m[][name]=bmFtZQ&m[][text]=Sm9uIFlvbmdmb29r&m[][name]=ZGF0ZQ&m[][text]=SnVseSAyMDIw&base64=true&s=892f4b867c07ac3e25f6960b6b7fb7bf01b6efe739d15ee1b894e835fff6c162
 ```
 
 ## Table of Contents
@@ -88,7 +88,7 @@ Bannerbear expects the signature to appear in the parameter `s`
 
 `&s=` should be the *last parameter* in your URLs
 
-The signature is calculated as an MD5 hash of your api key + url base + query
+The signature is calculated using HMAC
 
 ### Signing Example
 
