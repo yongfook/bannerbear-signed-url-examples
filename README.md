@@ -115,13 +115,11 @@ The returned URL at the end of this script is a signed url that will generate an
 
 ## Advanced: Using Base64
 
-Depending on your use case you may find that using escaped parameters does not produce sufficiently robust URLs for the platform you intend to use them with. As an example, in our testing we found that Pinterest had trouble importing Bannerbear Signed URLs using escaped parameters. When changed to the Base64 method, the URLs imported just fine. 
+Depending on your use case you may find that using escaped parameters does not produce sufficiently robust URLs for the platform you intend to use them with. As an example, in our testing we found that both Facebook and Pinterest had trouble importing Bannerbear Signed URLs using escaped parameters. When changed to the Base64 method, the URLs imported just fine. 
 
-### Add the &base64=true Parameter
+### Add the &base64 Parameter
 
-To use Base64 encoding, add the parameter `&base64=true` to your query string *before calculating the signature*.
-
-Then you will need to encode *all parameter values* in Base64, removing any padding or newlines that get added during the encoding process e.g. `==\n`
+To use Base64, encode the entire modifications query string (minus the starting ? sign) and place in a parameter `?base64=` *before calculating the signature*.
 
 In Ruby this is achieved via:
 
@@ -133,9 +131,14 @@ Example standard query:
 
 `?m[][name]=message&m[][text]=Hello+World`
 
-Same query using Base64:
+Base64 version:
 
-`?m[][name]=bWVzc2FnZQ&m[][text]=SGVsbG8gV29ybGQ&base64=true`
+```ruby
+mods = "m[][name]=message&m[][text]=Hello+World"
+mods = Base64.urlsafe_encode64(mods, :padding => false)
+return "?base64=" + mods
+#calculate signature with HMAC as usual
+```
 
 ## Troubleshooting
 
@@ -145,25 +148,6 @@ Getting your signature to match the one Bannerbear expects can be tricky at firs
 - Signature should be calculated *before* appending the `&s=` parameter
 - Signature should be calculated using HMAC
 - Ensure that you are not changing the query string after calculating the signature
-- If using Base64, ensure you are encoding *all* of your parameter values *including the layer name*
-
-### Examples
-
-:heavy_check_mark: Correct standard query
-
-`?m[][name]=message&m[][text]=Hello+World`
-
-:heavy_check_mark: Correct Base64 query
-
-`?m[][name]=bWVzc2FnZQ&m[][text]=SGVsbG8gV29ybGQ&base64=true`
-
-:x: Incorrect Base64 query - parameter is missing
-
-`?m[][name]=bWVzc2FnZQ&m[][text]=SGVsbG8gV29ybGQ`
-
-:x: Incorrect Base64 query - mix of encoded and unencoded parameter
-
-`?m[][name]=message&m[][text]=SGVsbG8gV29ybGQ&base64=true`
 
 ### Preloading Images in Meta Tags
 
