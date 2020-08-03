@@ -11,7 +11,7 @@ Signed URLs *do not use the API key* in the URL params as by nature these params
 This image url is an example signed url using the Base64 encoding method described further down this README. Notice that if you try to change any of the parameters, the response becomes invalid.
 
 ```
-https://cdn.bannerbear.com/signedurl/29oZzmYy7Qe7jxDORa/image.jpg?m[][name]=cGhvdG8&m[][image_url]=aHR0cHM6Ly93d3cuYmFubmVyYmVhci5jb20vaW1hZ2VzL2Jsb2cvcGhvdG8tMTQ5NTYzOTg2NzM4Ny01NDIzZDY4MTE1ODMtMS5qcGVn&m[][name]=dGl0bGU&m[][text]=V2lsbCBBSSBFdmVyIFJlcGxhY2UgRGVzaWduZXJzPw&m[][name]=cmVhZGluZw&m[][text]=OCBtaW51dGUgcmVhZA&m[][name]=YXZhdGFy&m[][image_url]=aHR0cHM6Ly93d3cuYmFubmVyYmVhci5jb20vaW1hZ2VzL2F1dGhvcl95b25nZm9vay5qcGc&m[][name]=bmFtZQ&m[][text]=Sm9uIFlvbmdmb29r&m[][name]=ZGF0ZQ&m[][text]=Tm92ZW1iZXIgMjAxOQ&base64=true&s=52f90de6cf09abbd3b58828046cd726e
+https://cdn.bannerbear.com/signedurl/NQ537aZE0kyvwj8bPx/image.jpg?m[][name]=cGhvdG8&m[][image_url]=aHR0cHM6Ly93d3cuYmFubmVyYmVhci5jb20vaW1hZ2VzL2Jsb2cvcGhvdG8tMTUxNzQ4Nzg4MTU5NC0yNzg3ZmVmNWViZjcuanBlZw&m[][name]=dGl0bGU&m[][text]=SG93IHRvIEF1dG8gR2VuZXJhdGUgUGludGVyZXN0IFBpbnMgVXNpbmcgU2lnbmVkIFVSTHM&m[][name]=cmVhZGluZw&m[][text]=NiBtaW51dGUgcmVhZA&m[][name]=YXZhdGFy&m[][image_url]=aHR0cHM6Ly93d3cuYmFubmVyYmVhci5jb20vaW1hZ2VzL2F1dGhvcl95b25nZm9vay5qcGc&m[][name]=bmFtZQ&m[][text]=Sm9uIFlvbmdmb29r&m[][name]=ZGF0ZQ&m[][text]=SnVseSAyMDIw&base64=true&s=892f4b867c07ac3e25f6960b6b7fb7bf01b6efe739d15ee1b894e835fff6c162
 ```
 
 ## Table of Contents
@@ -88,7 +88,7 @@ Bannerbear expects the signature to appear in the parameter `s`
 
 `&s=` should be the *last parameter* in your URLs
 
-The signature is calculated as an MD5 hash of your api key + url base + query
+The signature is calculated using HMAC
 
 ### Signing Example
 
@@ -115,13 +115,11 @@ The returned URL at the end of this script is a signed url that will generate an
 
 ## Advanced: Using Base64
 
-Depending on your use case you may find that using escaped parameters does not produce sufficiently robust URLs for the platform you intend to use them with. As an example, in our testing we found that Pinterest had trouble importing Bannerbear Signed URLs using escaped parameters. When changed to the Base64 method, the URLs imported just fine. 
+Depending on your use case you may find that using escaped parameters does not produce sufficiently robust URLs for the platform you intend to use them with. As an example, in our testing we found that both Facebook and Pinterest had trouble importing Bannerbear Signed URLs using escaped parameters. When changed to the Base64 method, the URLs imported just fine. 
 
-### Add the &base64=true Parameter
+### Add the &base64 Parameter
 
-To use Base64 encoding, add the parameter `&base64=true` to your query string *before calculating the signature*.
-
-Then you will need to encode *all parameter values* in Base64, removing any padding or newlines that get added during the encoding process e.g. `==\n`
+To use Base64, encode the entire modifications query string (minus the starting ? sign) and place in a parameter `?base64=` *before calculating the signature*.
 
 In Ruby this is achieved via:
 
@@ -133,9 +131,14 @@ Example standard query:
 
 `?m[][name]=message&m[][text]=Hello+World`
 
-Same query using Base64:
+Base64 version:
 
-`?m[][name]=bWVzc2FnZQ&m[][text]=SGVsbG8gV29ybGQ&base64=true`
+```ruby
+mods = "m[][name]=message&m[][text]=Hello+World"
+mods = Base64.urlsafe_encode64(mods, :padding => false)
+return "?base64=" + mods
+#calculate signature with HMAC as usual
+```
 
 ## Troubleshooting
 
@@ -143,27 +146,22 @@ Getting your signature to match the one Bannerbear expects can be tricky at firs
 
 - Ensure `&s=` is the last parameter in your URL
 - Signature should be calculated *before* appending the `&s=` parameter
-- Signature should be a MD5 hash of api key + full url
+- Signature should be calculated using HMAC
 - Ensure that you are not changing the query string after calculating the signature
-- If using Base64, ensure you are encoding *all* of your parameter values *including the layer name*
 
-### Examples
+### Preloading Images in Meta Tags
 
-:heavy_check_mark: Correct standard query
+One common use case for signed urls is to use them in meta tags e.g. open graph, twitter cards etc
 
-`?m[][name]=message&m[][text]=Hello+World`
+Browsers do not load the assets specified in these meta tags, so a normal page load will not initiate the signed url first-hit image generation.
 
-:heavy_check_mark: Correct Base64 query
+You can use preloading to solve this using the `<link>` tag in your document `<head>` like so:
 
-`?m[][name]=bWVzc2FnZQ&m[][text]=SGVsbG8gV29ybGQ&base64=true`
+```
+<link rel="preload" as="image" href="YOUR_SIGNED_URL" />
+```
 
-:x: Incorrect Base64 query - parameter is missing
-
-`?m[][name]=bWVzc2FnZQ&m[][text]=SGVsbG8gV29ybGQ`
-
-:x: Incorrect Base64 query - mix of encoded and unencoded parameter
-
-`?m[][name]=message&m[][text]=SGVsbG8gV29ybGQ&base64=true`
+This tells the browser to load the image, essentially pinging Bannerbear to begin the image generation process.
 
 ## Pull Requests Welcome
 
