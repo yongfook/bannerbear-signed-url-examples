@@ -30,6 +30,6 @@ function b64($string) {
 
 $query = "?base64=".b64($query);
 
-$signature = hash_hmac('sha256', $api_key, $base.$query);
+$signature = hash_hmac('sha256', $base.$query, $api_key);
 
 echo $base.$query."&s=".$signature;
