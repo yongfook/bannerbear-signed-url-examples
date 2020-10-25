@@ -15,7 +15,7 @@ $base = "https://cdn.bannerbear.com/signedurl/YOUR_SIGNED_URL_BASE_ID/image.jpg"
 $query = "?m[][name]=title&m[][text]=This+is+a+title&m[][name]=subtitle&m[][text]=This+is+a+subtitle";
 
 #calculate the signature
-$signature = hash_hmac('sha256', $api_key, $base.$query);
+$signature = hash_hmac('sha256', $base.$query, $api_key);
 
 #append the signature
 echo $base.$query."&s=".$signature;
