@@ -18,7 +18,6 @@ This url is an example signed url. Notice that if you try to change any of the p
 - [Create a Signed URL Base](#create-a-signed-url-base)
 - [Modifications](#modifications)
 - [Signing the URL](#signing-the-url)
-- [Advanced: Using Base64](#advanced-using-base64)
 - [On-Demand Signed URLs](#on-demand-signed-urls)
 - [Troubleshooting](#troubleshooting)
 
