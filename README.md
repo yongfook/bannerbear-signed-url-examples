@@ -54,7 +54,7 @@ Bannerbear expects all modifications to appear in the url parameter `modificatio
 You can grab some sample JSON for your template from the template's API Console e.g.
 
 ```json
-"[
+[
   {
     "name": "message",
     "text": "Hello World"
