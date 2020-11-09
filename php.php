@@ -24,6 +24,6 @@ $signature = hash_hmac('sha256', $base.$query, $api_key);
 #Standard Signed URL
 echo $base . $query."&s=" . $signature;
 
-#On Demand Signed URL
+#On-Demand Signed URL
 $base = str_replace("cdn.bannerbear.com", "on-demand.bannerbear.com", $base);
 echo $base . $query."&s=" . $signature;
