@@ -19,6 +19,7 @@ This url is an example signed url. Notice that if you try to change any of the p
 - [Modifications](#modifications)
 - [Signing the URL](#signing-the-url)
 - [Advanced: Using Base64](#advanced-using-base64)
+- [On-Demand Signed URLs](#on-demand-signed-urls)
 - [Troubleshooting](#troubleshooting)
 
 ## How it Works
@@ -100,16 +101,9 @@ return base + query + "&s=" + signature
 
 The returned URL at the end of this script is a signed url that will generate an image when accessed.
 
-## Troubleshooting
+## On-Demand Signed URLs
 
-Getting your signature to match the one Bannerbear expects can be tricky at first. Here are some common issues if you're seeing an `invalid signature` error:
-
-- Ensure `&s=` is the last parameter in your URL
-- Signature should be calculated *before* appending the `&s=` parameter
-- Signature should be calculated using HMAC
-- Ensure that you are not changing the query string after calculating the signature
-
-### On-Demand Signed URLs
+On-demand signed urls generate images synchronously in a single HTTP request. This makes them suitable for website meta tags, emails and more.
 
 The process for creating on-demand signed urls is the same as the standard process.
 
@@ -122,6 +116,15 @@ This will point the url at the on-demand server endpoint and will render your im
 [Example On-Demand Signed URL](https://on-demand.bannerbear.com/signedurl/NQ537aZE0aaevwj8bP/image.jpg?modifications=W3sibmFtZSI6InBob3RvIiwiaW1hZ2VfdXJsIjoiaHR0cHM6Ly93d3cuYmFubmVyYmVhci5jb20vaW1hZ2VzL2Jsb2cvcGhvdG8tMTQ5NTYzOTg2NzM4Ny01NDIzZDY4MTE1ODMtMS5qcGVnIn0seyJuYW1lIjoidGl0bGUiLCJ0ZXh0IjoiV2lsbCBBSSBFdmVyIFJlcGxhY2UgRGVzaWduZXJzPyJ9LHsibmFtZSI6InJlYWRpbmciLCJ0ZXh0IjoiOCBtaW51dGUgcmVhZCJ9LHsibmFtZSI6ImF2YXRhciIsImltYWdlX3VybCI6Imh0dHBzOi8vd3d3LmJhbm5lcmJlYXIuY29tL2ltYWdlcy9hdXRob3JfeW9uZ2Zvb2suanBnIn0seyJuYW1lIjoibmFtZSIsInRleHQiOiJKb24gWW9uZ2Zvb2sifSx7Im5hbWUiOiJkYXRlIiwidGV4dCI6Ik5vdmVtYmVyIDIwMTkifV0&s=f96c93cbd31349e6b5ad907e4a14af71223e5f30fe13a0a230f507b1732219cb)
 
 Notice how the query string is exactly the same - only the domain is different.
+
+## Troubleshooting
+
+Getting your signature to match the one Bannerbear expects can be tricky at first. Here are some common issues if you're seeing an `invalid signature` error:
+
+- Ensure `&s=` is the last parameter in your URL
+- Signature should be calculated *before* appending the `&s=` parameter
+- Signature should be calculated using HMAC
+- Ensure that you are not changing the query string after calculating the signature
 
 ## Pull Requests Welcome
 
