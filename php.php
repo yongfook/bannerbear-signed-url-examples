@@ -11,25 +11,14 @@ $api_key = "YOUR_API_KEY";
 #base: this signed url base
 $base = "https://cdn.bannerbear.com/signedurl/YOUR_SIGNED_URL_BASE_ID/image.jpg";
 
-#query: the query string of modifications you want to generate
-$query = "?m[][name]=title&m[][text]=This+is+a+title&m[][name]=subtitle&m[][text]=This+is+a+subtitle";
+#modifications: grab this JSON from your template API Console and modify as needed
+$modifications = '[{"name":"photo","image_url":"https://cdn.bannerbear.com/sample_images/welcome_bear_photo.jpg"},{"name":"text","text":"Hello World"}]';
+
+#create the query string
+$query = "?modifications=" . rtrim(strtr(base64_encode($modifications), '+/', '-_'), '=');
 
 #calculate the signature
 $signature = hash_hmac('sha256', $base.$query, $api_key);
 
 #append the signature
-echo $base.$query."&s=".$signature;
-
-
-########################################################
-#Base64 Example
-
-function b64($string) {
-	return rtrim(strtr(base64_encode($string), '+/', '-_'), '='); 
-}
-
-$query = "?base64=".b64($query);
-
-$signature = hash_hmac('sha256', $base.$query, $api_key);
-
-echo $base.$query."&s=".$signature;
+echo $base . $query."&s=" . $signature;
