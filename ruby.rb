@@ -12,7 +12,7 @@ base = "https://cdn.bannerbear.com/signedurl/YOUR_SIGNED_URL_BASE_ID/image.jpg"
 modifications = [{"name":"message","text":"Hello World"},{"name":"photo","image_url":"https://cdn.bannerbear.com/sample_images/welcome_bear_photo.jpg"}]
 
 #create the query string
-query = "?modifications=" + Base64.urlsafe_encode64(modifications, :padding => false)
+query = "?modifications=" + Base64.urlsafe_encode64(modifications.to_json, :padding => false)
 
 #calculate the signature
 signature = OpenSSL::HMAC.hexdigest("SHA256", api_key, base + query)
