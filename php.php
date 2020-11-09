@@ -3,7 +3,6 @@
 #this code contains the placeholders YOUR_API_KEY and YOUR_SIGNED_URL_BASE_ID which are meant to be replaced with your own key / id
 
 ########################################################
-#Standard Example
 
 #api_key: your project API key - keep this safe and non-public
 $api_key = "YOUR_API_KEY";
@@ -21,4 +20,10 @@ $query = "?modifications=" . rtrim(strtr(base64_encode($modifications), '+/', '-
 $signature = hash_hmac('sha256', $base.$query, $api_key);
 
 #append the signature
+
+#Standard Signed URL
+echo $base . $query."&s=" . $signature;
+
+#On Demand Signed URL
+$base = str_replace("cdn.bannerbear.com", "on-demand.bannerbear.com", $base);
 echo $base . $query."&s=" . $signature;
