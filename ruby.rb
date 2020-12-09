@@ -6,7 +6,7 @@
 api_key = "YOUR_API_KEY"
 
 #base: this signed url base
-base = "https://cdn.bannerbear.com/signedurl/YOUR_SIGNED_URL_BASE_ID/image.jpg"
+base = "https://on-demand.bannerbear.com/signedurl/YOUR_SIGNED_URL_BASE_ID/image.jpg"
 
 #modifications: grab this JSON from your template API Console and modify as needed
 modifications = [{"name":"message","text":"Hello World"},{"name":"photo","image_url":"https://cdn.bannerbear.com/sample_images/welcome_bear_photo.jpg"}]
@@ -17,8 +17,5 @@ query = "?modifications=" + Base64.urlsafe_encode64(modifications.to_json, :padd
 #calculate the signature
 signature = OpenSSL::HMAC.hexdigest("SHA256", api_key, base + query)
 
-#Standard Signed URL
+#Signed URL
 puts base + query + "&s=" + signature
-
-#On-Demand Signed URL
-puts base.gsub("cdn.bannerbear.com", "on-demand.bannerbear.com") + query + "&s=" + signature
