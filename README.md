@@ -103,7 +103,7 @@ To generate images asynchronously, simply substitute `on-demand.bannerbear.com` 
 
 [Example Async Signed URL](https://cdn.bannerbear.com/signedurl/NQ537aZE0aaevwj8bP/image.jpg?modifications=W3sibmFtZSI6InBob3RvIiwiaW1hZ2VfdXJsIjoiaHR0cHM6Ly93d3cuYmFubmVyYmVhci5jb20vaW1hZ2VzL2Jsb2cvcGhvdG8tMTQ5NTYzOTg2NzM4Ny01NDIzZDY4MTE1ODMtMS5qcGVnIn0seyJuYW1lIjoidGl0bGUiLCJ0ZXh0IjoiV2lsbCBBSSBFdmVyIFJlcGxhY2UgRGVzaWduZXJzPyJ9LHsibmFtZSI6InJlYWRpbmciLCJ0ZXh0IjoiOCBtaW51dGUgcmVhZCJ9LHsibmFtZSI6ImF2YXRhciIsImltYWdlX3VybCI6Imh0dHBzOi8vd3d3LmJhbm5lcmJlYXIuY29tL2ltYWdlcy9hdXRob3JfeW9uZ2Zvb2suanBnIn0seyJuYW1lIjoibmFtZSIsInRleHQiOiJKb24gWW9uZ2Zvb2sifSx7Im5hbWUiOiJkYXRlIiwidGV4dCI6Ik5vdmVtYmVyIDIwMTkifV0&s=f96c93cbd31349e6b5ad907e4a14af71223e5f30fe13a0a230f507b1732219cb)
 
-Notice how the query string is exactly the same - only the domain is different.
+Bannerbear allows signatures calculated using either one of these domains, so you can use signatures interchangeably on async / sync requests (notice how the query string is exactly the same on both the above urls).
 
 ## Troubleshooting
 
