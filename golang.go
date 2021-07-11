@@ -28,7 +28,7 @@ func main() {
 	}
 	modsEncoded := base64.RawURLEncoding.EncodeToString(modsJSON)
 
-	base := fmt.Sprintf("https://on-demand.bannerbear.com/signedurl/%s/image.jpg", BANNERBEAR_SIGNED_URL_BASE)
+	base := fmt.Sprintf("https://ondemand.bannerbear.com/signedurl/%s/image.jpg", BANNERBEAR_SIGNED_URL_BASE)
 	reqURL := fmt.Sprintf("%s?modifications=%s", base, modsEncoded)
 
 	h := hmac.New(sha256.New, []byte(BANNERBEAR_API_KEY))
