@@ -1,3 +1,19 @@
+!! UPDATE !!
+
+Bannerbear now features **official libraries** which all include a convenient utility for generating signed urls:
+
+- [Bannerbear Ruby](https://github.com/yongfook/bannerbear-ruby)
+- [Bannerbear Node](https://github.com/yongfook/bannerbear-node)
+- [Bannerbear PHP](https://github.com/yongfook/bannerbear-php)
+
+It is recommended that you use the official libraries. 
+
+If however you would like to create signed urls manually, follow the instructions below.
+
+.
+.
+.
+
 # Bannerbear Signed URLs
 
 [Signed URLs](https://www.bannerbear.com/integrations/signed-urls/) are a way to use Bannerbear to generate images on demand using only URL parameters.
